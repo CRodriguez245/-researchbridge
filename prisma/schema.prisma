@@ -1,0 +1,137 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model User {
+  id            String           @id @default(cuid())
+  name          String?
+  email         String           @unique
+  emailVerified DateTime?
+  image         String?
+  role          String           @default("student") // student, instructor, admin
+  createdAt     DateTime         @default(now())
+  updatedAt     DateTime         @updatedAt
+  password      String?
+  accounts      Account[]
+  sessions      Session[]
+  preferences   UserPreferences?
+  
+  // Instructor relationships
+  classes       Class[]          @relation("ClassInstructor")
+  enrollments   Enrollment[]
+  events        Event[]
+  artifacts     Artifact[]
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model UserPreferences {
+  id                  String   @id @default(cuid())
+  userId              String   @unique
+  language            String   @default("English")
+  interests           String   @default("[]")
+  community           String   @default("General")
+  outputStyle         String   @default("paragraphs")
+  textSize            String   @default("medium")
+  defaultReadingLevel String   @default("simple")
+  microPromptsEnabled Boolean  @default(true)
+  curiosity           String?
+  hasOnboarded        Boolean  @default(false)
+  signals             String   @default("[]")
+  preferences         String   @default("{}")
+  nudges              String   @default("{}")
+  lastSession         String?
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+  user                User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+// Instructor view models
+model Class {
+  id           String   @id @default(cuid())
+  name         String
+  instructorId String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  
+  instructor   User         @relation("ClassInstructor", fields: [instructorId], references: [id], onDelete: Cascade)
+  enrollments  Enrollment[]
+  events       Event[]
+  artifacts    Artifact[]
+}
+
+model Enrollment {
+  id        String   @id @default(cuid())
+  userId    String
+  classId   String
+  createdAt DateTime @default(now())
+  
+  user      User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  class     Class @relation(fields: [classId], references: [id], onDelete: Cascade)
+  
+  @@unique([userId, classId])
+}
+
+model Event {
+  id         String   @id @default(cuid())
+  userId     String
+  classId    String?
+  event      String   // session_start, session_end, mode_used, etc.
+  properties String   @default("{}") // JSON string of event properties
+  ts         DateTime @default(now())
+  
+  user       User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  class      Class? @relation(fields: [classId], references: [id], onDelete: Cascade)
+}
+
+model Artifact {
+  id        String   @id @default(cuid())
+  userId    String
+  classId   String?
+  title     String
+  type      String   // summary, outline, citation, etc.
+  url       String?  // Optional URL to the artifact
+  content   String?  // Optional content (only if student opts to share)
+  isShared  Boolean  @default(false)
+  createdAt DateTime @default(now())
+  
+  user      User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  class     Class? @relation(fields: [classId], references: [id], onDelete: Cascade)
+}
