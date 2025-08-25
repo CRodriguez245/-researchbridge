@@ -98,9 +98,9 @@ export default function Onboarding() {
   // Show loading state while checking if user has already onboarded
   if (isLoading || status === "loading") {
     return (
-      <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4">
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50/30 flex items-center justify-center p-4">
         <div className="text-center">
-          <div className="animate-spin  h-8 w-8 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <div className="animate-spin  h-8 w-8 border-b-2 border-slate-600 mx-auto mb-4"></div>
           <p className="text-slate-600">Loading...</p>
         </div>
       </div>
@@ -114,12 +114,24 @@ export default function Onboarding() {
   };
 
   const handleCompleteOnboarding = () => {
-    // Save settings and redirect to main app
-    updateSettings({
-      ...formData,
-      hasOnboarded: true
-    });
-    router.push("/");
+    try {
+      console.log('Completing onboarding with data:', formData);
+      
+      // Save settings and redirect to main app
+      updateSettings({
+        ...formData,
+        hasOnboarded: true
+      });
+      
+      console.log('Settings update initiated');
+      
+      // Force a page reload to ensure settings are loaded
+      window.location.href = "/";
+    } catch (error) {
+      console.error('Error completing onboarding:', error);
+      // Fallback: just redirect
+      window.location.href = "/";
+    }
   };
 
   const handleBack = () => {
@@ -146,18 +158,18 @@ export default function Onboarding() {
 
   if (currentStepData.id === "welcome") {
     return (
-      <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4">
-        <div className="max-w-md w-full bg-white  shadow-md p-8">
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50/30 flex items-center justify-center p-4">
+        <div className="max-w-md w-full bg-white/90 backdrop-blur-sm shadow-lg border border-slate-200/60 p-8 rounded-lg">
           <div className="text-center">
-            <h1 className="text-2xl font-bold text-gray-900 mb-4">
+            <h1 className="text-2xl font-bold tracking-tight bg-gradient-to-r from-slate-900 via-blue-800 to-indigo-900 bg-clip-text text-transparent mb-4">
               {currentStepData.title}
             </h1>
-            <p className="text-gray-600 mb-8">
+            <p className="text-slate-600 mb-8">
               {currentStepData.description}
             </p>
             <button
               onClick={handleNext}
-              className="w-full bg-blue-600 text-white py-3 px-4  hover:bg-blue-700 transition-colors"
+              className="w-full bg-gradient-to-r from-slate-500 to-slate-600 text-white py-3 px-4 hover:from-slate-600 hover:to-slate-700 transition-all duration-200 shadow-md hover:shadow-lg rounded-lg"
             >
               Get Started
             </button>
@@ -169,11 +181,11 @@ export default function Onboarding() {
 
   if (currentStepData.id === "complete") {
     return (
-      <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4">
-        <div className="max-w-md w-full bg-white  shadow-md p-8">
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50/30 flex items-center justify-center p-4">
+        <div className="max-w-md w-full bg-white/90 backdrop-blur-sm shadow-lg border border-slate-200/60 p-8 rounded-lg">
           <div className="text-center">
-            <div className="w-16 h-16 bg-green-100  flex items-center justify-center mx-auto mb-4">
-              <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="w-16 h-16 bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center mx-auto mb-4 rounded-full">
+              <svg className="w-8 h-8 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
               </svg>
             </div>
@@ -185,7 +197,7 @@ export default function Onboarding() {
             </p>
             
             {/* Optional sign-up prompt */}
-            <div className="bg-blue-50 border border-blue-200  p-4 mb-6">
+            <div className="bg-blue-50 border border-blue-200 p-4 mb-6 rounded-lg">
               <h3 className="font-semibold text-blue-900 mb-2">
                 Want to save your preferences?
               </h3>
@@ -195,13 +207,13 @@ export default function Onboarding() {
               <div className="flex gap-2">
                 <Link
                   href="/auth/signup"
-                  className="flex-1 bg-blue-600 text-white py-2 px-4  text-sm hover:bg-blue-700 transition-colors"
+                  className="flex-1 bg-blue-600 text-white py-2 px-4 text-sm hover:bg-blue-700 transition-colors rounded-lg"
                 >
                   Sign Up
                 </Link>
                 <button
                   onClick={handleCompleteOnboarding}
-                  className="flex-1 bg-gray-200 text-gray-700 py-2 px-4  text-sm hover:bg-gray-300 transition-colors"
+                  className="flex-1 bg-gray-200 text-gray-700 py-2 px-4 text-sm hover:bg-gray-300 transition-colors rounded-lg"
                 >
                   Continue Without Account
                 </button>
@@ -215,7 +227,7 @@ export default function Onboarding() {
 
   return (
     <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4">
-      <div className="max-w-md w-full bg-white  shadow-md p-8">
+      <div className="max-w-md w-full bg-white shadow-md p-8 rounded-lg">
         <div className="mb-6">
           <div className="flex justify-between items-center mb-4">
             <span className="text-sm text-gray-500">

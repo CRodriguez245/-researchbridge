@@ -1,0 +1,32 @@
+ResearchBridge File Upload Test Document
+
+This is a sample text document to test the file upload functionality in ResearchBridge.
+
+Key Features of ResearchBridge:
+1. URL Processing - Paste any article URL and get instant analysis
+2. Text Analysis - Paste any text content for summarization and insights
+3. File Upload - Upload documents in various formats (NEW!)
+4. Question Answering - Ask specific questions about your content
+5. Citation Generation - Get properly formatted citations
+6. Outline Creation - Generate structured outlines from your content
+
+Supported File Formats:
+- Text files (.txt)
+- PDF documents (.pdf)
+- Word documents (.doc, .docx)
+- CSV files (.csv)
+- JSON files (.json)
+
+File Size Limit: 10MB
+
+This feature makes ResearchBridge even more versatile for researchers, students, and professionals who work with various document formats. Users can now upload their research papers, reports, articles, and other documents directly into the platform for analysis.
+
+The file upload feature includes:
+- Drag and drop functionality
+- Visual feedback during upload
+- File type validation
+- Size limit enforcement
+- Automatic text extraction (for supported formats)
+- Clear file management with remove option
+
+This enhancement significantly improves the user experience by providing multiple ways to input content for analysis. 

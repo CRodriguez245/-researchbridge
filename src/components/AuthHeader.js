@@ -5,10 +5,7 @@ import Link from "next/link";
 export default function AuthHeader() {
   const { data: session, status } = useSession();
 
-  // Debug logging
-  console.log("AuthHeader - Status:", status);
-  console.log("AuthHeader - Session:", session);
-  console.log("AuthHeader - User role:", session?.user?.role);
+
 
   if (status === "loading") {
     return (
@@ -26,9 +23,11 @@ export default function AuthHeader() {
         <div className="text-sm text-gray-600">
           {session?.user ? (
             <span>
-              Welcome back, <span className="font-medium text-gray-800">{session.user.name || session.user.email}</span>
-              {session.user.role && (
-                <span className="ml-2 text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">
+              Welcome back, <span className="font-medium text-gray-800">
+                {session.user.name?.replace(/instructor$/i, '') || session.user.email}
+              </span>
+              {session.user.role && session.user.role !== 'instructor' && (
+                <span className="ml-2 text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full">
                   {session.user.role}
                 </span>
               )}
@@ -41,6 +40,7 @@ export default function AuthHeader() {
         <div className="flex items-center space-x-4">
           {session?.user ? (
             <>
+              {/* Instructor Dashboard - only for instructors */}
               {session.user.role === "instructor" && (
                 <Link 
                   href="/instructor" 
@@ -49,6 +49,7 @@ export default function AuthHeader() {
                   Instructor Dashboard
                 </Link>
               )}
+              {/* AI Preferences and Settings - always visible for authenticated users */}
               <Link 
                 href="/preferences" 
                 className="text-sm text-gray-600 hover:text-gray-800"
@@ -70,6 +71,19 @@ export default function AuthHeader() {
             </>
           ) : (
             <>
+              {/* AI Preferences and Settings - always visible for unauthenticated users */}
+              <Link 
+                href="/preferences" 
+                className="text-sm text-gray-600 hover:text-gray-800"
+              >
+                AI Preferences
+              </Link>
+              <Link 
+                href="/settings" 
+                className="text-sm text-gray-600 hover:text-gray-800"
+              >
+                Settings
+              </Link>
               <Link 
                 href="/auth/signin" 
                 className="text-sm text-gray-600 hover:text-gray-800"

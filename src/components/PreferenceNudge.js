@@ -39,12 +39,12 @@ const TAG_ICONS = {
 };
 
 export default function PreferenceNudge({ tag, onApply, onDismiss, isStreaming = false }) {
+  // Don't show if streaming is still happening - check before hooks
+  if (isStreaming) return null;
+  
   const [isVisible, setIsVisible] = useState(true);
   const [isAnimating, setIsAnimating] = useState(false);
   const { setPreference, dismissNudge } = useSettings();
-
-  // Don't show if streaming is still happening
-  if (!isVisible || isStreaming) return null;
 
   // Start animation when component mounts
   useEffect(() => {
@@ -67,7 +67,7 @@ export default function PreferenceNudge({ tag, onApply, onDismiss, isStreaming =
   const explanation = TAG_EXPLANATIONS[tag] || "This preference will help customize your experience.";
   const icon = TAG_ICONS[tag] || "⚙️";
 
-  return (
+  return !isVisible ? null : (
           <div 
         className={`w-full max-w-4xl mx-auto mt-4 p-4 border-t border-light bg-surface transition-all duration-500 ease-out ${
           isAnimating ? 'translate-y-0 opacity-100' : 'translate-y-full opacity-0'

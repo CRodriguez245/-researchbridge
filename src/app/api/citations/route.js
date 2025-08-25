@@ -42,11 +42,13 @@ export async function POST(request) {
           {
             role: "user",
             content: [
-              `Respond in ${language}. Use an inclusive tone.`,
+              `Respond in ${language}. Use an inclusive tone with markdown formatting (**bold** for emphasis, *italic* for key terms).`,
               interests ? `If helpful, relate queries to these interests: ${interests}.` : "",
               community ? `Include ideas for local/community organizations or public resources relevant to: ${community}.` : "",
-              "Suggest 3-5 search queries and example credible sources to verify the claims in this text.",
-              "Keep it short and practical.",
+              "Structure your response with:",
+              "- ### **Search Queries** (3-5 specific search terms)",
+              "- ### **Credible Sources** (example websites and organizations)",
+              "- ### **Local Resources** (community-specific verification options)",
               "Text:\n\n" + (source || "(none)"),
             ].join("\n\n"),
           },
@@ -62,7 +64,8 @@ export async function POST(request) {
     const citationPrompt = [
       `Respond in ${language}.`,
       "Turn these URLs into brief MLA-style citations (author or site, title, publisher/site, date if available, URL).",
-      "Return as a simple bullet list.",
+      "Use markdown formatting with **bold** for titles and *italic* for authors.",
+      "Return as a structured list with ### **MLA Citations** as the header.",
       urls.map((u, i) => `${i + 1}. ${u}`).join("\n"),
     ].join("\n\n");
 

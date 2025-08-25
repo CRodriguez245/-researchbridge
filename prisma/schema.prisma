@@ -52,6 +52,7 @@ model User {
   enrollments   Enrollment[]
   events        Event[]
   artifacts     Artifact[]
+  savedQueries  SavedQuery[]
 }
 
 model VerificationToken {
@@ -134,4 +135,21 @@ model Artifact {
   
   user      User  @relation(fields: [userId], references: [id], onDelete: Cascade)
   class     Class? @relation(fields: [classId], references: [id], onDelete: Cascade)
+}
+
+model SavedQuery {
+  id          String   @id @default(cuid())
+  userId      String
+  title       String
+  query       String   // The actual query text
+  mode        String   // summarize, ask, outline, citations
+  url         String?  // Optional URL that was queried
+  result      String?  // Optional: store a snippet of the result
+  tags        String   @default("[]") // JSON array of tags
+  isFavorite  Boolean  @default(false)
+  folder      String?  // Simple folder name for organization
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

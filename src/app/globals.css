@@ -213,7 +213,7 @@ nav, .nav, .header, .footer {
   color: var(--background);
   border: none;
   padding: 0.75rem 1.5rem;
-  border-radius: 0;
+  border-radius: 0.5rem;
   font-weight: 500;
   transition: all 0.2s ease;
 }
@@ -229,7 +229,7 @@ nav, .nav, .header, .footer {
   color: var(--text-primary);
   border: 1px solid var(--border-light);
   padding: 0.75rem 1.5rem;
-  border-radius: 0;
+  border-radius: 0.5rem;
   font-weight: 500;
   transition: all 0.2s ease;
 }
@@ -244,7 +244,7 @@ nav, .nav, .header, .footer {
   color: var(--text-primary);
   border: 1px solid var(--border-medium);
   padding: 0.75rem 1.5rem;
-  border-radius: 0;
+  border-radius: 0.5rem;
   font-weight: 500;
   transition: all 0.2s ease;
 }
@@ -260,6 +260,8 @@ nav, .nav, .header, .footer {
   background-color: var(--background);
   border: 1px solid var(--border-light);
   box-shadow: 0 1px 3px var(--shadow-light);
+  border-radius: 0.75rem;
+  overflow: hidden;
   transition: all 0.2s ease;
 }
 
@@ -274,7 +276,7 @@ nav, .nav, .header, .footer {
   border: 1px solid var(--border-light);
   color: var(--text-primary);
   padding: 0.75rem;
-  border-radius: 0;
+  border-radius: 0.5rem;
   transition: all 0.2s ease;
 }
 
@@ -445,4 +447,181 @@ input[type="radio"]:disabled {
 
 .animate-bounce {
   animation: bounce 1s infinite;
+}
+
+/* Enhanced Typography for Formatted Content */
+.result-content {
+  padding: 0 1rem;
+  /* Performance optimizations */
+  will-change: contents;
+  contain: layout style;
+}
+
+/* Card-based layout for better student experience */
+.result-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  padding: 1rem;
+}
+
+.result-content > * {
+  background: white;
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  transition: all 0.2s ease;
+}
+
+.result-content > *:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+/* Special styling for different content types */
+.result-content h1,
+.result-content h2,
+.result-content h3 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 2px solid var(--accent-primary);
+  color: var(--text-primary);
+}
+
+.result-content h1 {
+  font-size: 1.5rem;
+  grid-column: 1 / -1;
+  background: linear-gradient(135deg, var(--primary), var(--accent-primary));
+  color: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  border: none;
+}
+
+.result-content h2 {
+  font-size: 1.25rem;
+  color: var(--primary);
+}
+
+.result-content h3 {
+  font-size: 1.125rem;
+  color: var(--text-secondary);
+  border-bottom: 1px solid var(--border-light);
+}
+
+/* Make lists more prominent in cards */
+.result-content ul,
+.result-content ol {
+  margin: 1rem 0;
+  padding-left: 1.5rem;
+}
+
+.result-content li {
+  margin: 0.75rem 0;
+  line-height: 1.6;
+  padding-left: 0.5rem;
+}
+
+/* Enhanced blockquotes for key insights */
+.result-content blockquote {
+  background: linear-gradient(135deg, var(--surface), var(--accent-light));
+  border-left: 4px solid var(--accent-primary);
+  padding: 1.5rem;
+  margin: 1rem 0;
+  border-radius: 8px;
+  font-style: italic;
+  color: var(--text-secondary);
+}
+
+/* Code blocks with better styling */
+.result-content pre {
+  background: var(--surface);
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin: 1rem 0;
+  overflow-x: auto;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .result-content {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    padding: 0.5rem;
+  }
+  
+  .result-content > * {
+    padding: 1rem;
+  }
+}
+
+/* Utility classes */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+
+
+/* Additional styling for card content */
+.result-content strong {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.result-content em {
+  font-style: italic;
+  color: var(--text-secondary);
+  background-color: var(--surface);
+  padding: 0.125rem 0.25rem;
+  border-radius: 0.25rem;
+}
+
+.result-content code {
+  background-color: var(--surface);
+  border: 1px solid var(--border-light);
+  border-radius: 0.25rem;
+  font-family: "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", Consolas, "Courier New", monospace;
+  font-size: 0.875rem;
+  padding: 0.125rem 0.25rem;
+}
+
+.result-content pre code {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.result-content a {
+  color: var(--info);
+  text-decoration: underline;
+  transition: color 0.2s ease;
+}
+
+.result-content a:hover {
+  color: var(--primary);
+}
+
+.result-content p {
+  margin: 1rem 0;
+  line-height: 1.7;
+}
+
+/* Special styling for key sections */
+.result-content h3:has(+ ul),
+.result-content h3:has(+ ol) {
+  margin-bottom: 0.5rem;
+}
+
+.result-content h3 + ul,
+.result-content h3 + ol {
+  margin-top: 0.5rem;
 }

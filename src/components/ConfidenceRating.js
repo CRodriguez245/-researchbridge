@@ -83,7 +83,7 @@ export default function ConfidenceRating({ context, onRatingSubmit }) {
           <button
             key={level.value}
             onClick={() => handleRatingClick(level.value)}
-            className={`flex-1 p-2 border border-gray-200 transition-all hover:scale-105 ${
+            className={`flex-1 p-2 border border-gray-200 transition-all hover:scale-105 rounded-lg ${
               rating === level.value
                 ? `${level.color} border-gray-300`
                 : "bg-white hover:bg-gray-50"

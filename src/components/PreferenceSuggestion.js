@@ -6,7 +6,10 @@ export default function PreferenceSuggestion({ suggestionType, onApply, onDismis
   const [isVisible, setIsVisible] = useState(true);
   const { settings } = useSettings();
 
-  if (!isVisible) return null;
+  // Always render, but conditionally show content
+  if (!isVisible) {
+    return null;
+  }
 
   const getSuggestionContent = () => {
     switch (suggestionType) {
@@ -52,7 +55,6 @@ export default function PreferenceSuggestion({ suggestionType, onApply, onDismis
   };
 
   const content = getSuggestionContent();
-  if (!content) return null;
 
   const handleApply = () => {
     onApply(content.settingKey, content.settingValue);
@@ -64,8 +66,8 @@ export default function PreferenceSuggestion({ suggestionType, onApply, onDismis
     setIsVisible(false);
   };
 
-  return (
-    <div className="fixed bottom-4 right-4 max-w-sm bg-white  shadow-lg border border-slate-200 p-4 z-50 animate-in slide-in-from-bottom-2 duration-300">
+  return (!isVisible || !content) ? null : (
+          <div className="fixed bottom-4 right-4 max-w-sm bg-white shadow-lg border border-slate-200 p-4 z-50 animate-in slide-in-from-bottom-2 duration-300 rounded-lg overflow-hidden">
       <div className="flex items-start gap-3">
         <div className="flex-shrink-0">
           <div className="w-8 h-8 bg-blue-100  flex items-center justify-center">

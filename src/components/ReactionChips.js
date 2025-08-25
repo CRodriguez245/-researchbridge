@@ -37,7 +37,7 @@ export default function ReactionChips({ context, className = "" }) {
             <span className="hidden sm:inline">{chip.label}</span>
             
             {/* Enhanced Tooltip */}
-            <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-2 bg-white border border-gray-200 text-gray-800 text-xs opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-10 shadow-lg">
+            <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-2 bg-white border border-gray-200 text-gray-800 text-xs opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-10 shadow-lg rounded-lg overflow-hidden">
               <div className="font-medium mb-1">{chip.label}</div>
               <div className="text-gray-600">{chip.explanation}</div>
               <div className="absolute top-full left-1/2 transform -translate-x-1/2 border-4 border-transparent border-t-gray-200"></div>

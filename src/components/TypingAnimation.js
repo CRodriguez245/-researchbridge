@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 
-export default function TypingAnimation({ text, speed = 30, className = "", onComplete }) {
+export default function TypingAnimation({ text, speed = 15, className = "", onComplete }) {
   const [displayedText, setDisplayedText] = useState("");
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isComplete, setIsComplete] = useState(false);
@@ -34,11 +34,11 @@ export default function TypingAnimation({ text, speed = 30, className = "", onCo
   }, [text]);
 
   return (
-    <div className={className}>
-      {displayedText}
-      {currentIndex < text.length && (
-        <span className="animate-pulse">|</span>
-      )}
-    </div>
+    <div 
+      className={className}
+      dangerouslySetInnerHTML={{ 
+        __html: displayedText + (currentIndex < text.length ? '<span class="animate-pulse">|</span>' : '')
+      }}
+    />
   );
 } 

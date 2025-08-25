@@ -97,6 +97,7 @@ export function SettingsProvider({ children }) {
   const updateSettings = useCallback((partial) => {
     setSettings(prev => {
       const newSettings = typeof partial === 'function' ? partial(prev) : { ...prev, ...partial };
+      // Save settings asynchronously but don't wait for it
       saveSettings(newSettings);
       return newSettings;
     });
@@ -112,8 +113,8 @@ export function SettingsProvider({ children }) {
     updateSettings((prev) => {
       const newSignal = {
         tag,
-        at: new Date().toISOString(),
-        context
+        context,
+        timestamp: new Date().toISOString()
       };
       
       const newSignals = [...prev.signals, newSignal];
@@ -163,7 +164,7 @@ export function SettingsProvider({ children }) {
   // Get active preferences for display
   const getActivePreferences = useCallback(() => {
     return Object.entries(settings.preferences)
-      .filter(([tag, pref]) => pref.default)
+      .filter(([tag, pref]) => pref.default === true)
       .map(([tag]) => tag);
   }, [settings.preferences]);
 
@@ -193,9 +194,9 @@ export function SettingsProvider({ children }) {
     return true;
   }, [settings.signals, settings.preferences, settings.nudges, settings.defaultReadingLevel, settings.outputStyle]);
 
-  const value = useMemo(
-    () => ({ 
-      settings, 
+  // Always render, but conditionally show content
+  const contextValue = useMemo(() => {
+    const baseContext = {
       updateSettings, 
       resetSettings, 
       addSignal, 
@@ -204,12 +205,37 @@ export function SettingsProvider({ children }) {
       getActivePreferences, 
       shouldShowNudge,
       isAuthenticated: !!session?.user?.id,
-      isLoading
-    }),
-    [settings, updateSettings, resetSettings, addSignal, setPreference, dismissNudge, getActivePreferences, shouldShowNudge, session?.user?.id, isLoading]
+      isLoading: status === "loading"
+    };
+
+    if (status === "loading") {
+      return { 
+        settings: defaultSettings,
+        ...baseContext,
+        isLoading: true 
+      };
+    }
+    if (status === "unauthenticated") {
+      return { 
+        settings: defaultSettings,
+        ...baseContext,
+        isLoading: false, 
+        isAuthenticated: false 
+      };
+    }
+    return { 
+      settings, 
+      ...baseContext
+    };
+  }, [status, settings, updateSettings, resetSettings, addSignal, setPreference, dismissNudge, getActivePreferences, shouldShowNudge, session?.user?.id, isLoading]);
+
+  return (
+    <SettingsContext.Provider value={contextValue}>
+      {children}
+    </SettingsContext.Provider>
   );
 
-  return <SettingsContext.Provider value={value}>{children}</SettingsContext.Provider>;
+
 }
 
 export function useSettings() {
