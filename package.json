@@ -2,6 +2,7 @@
   "name": "web",
   "version": "0.1.0",
   "private": true,
+  "_comment": "Force Vercel rebuild - Clean dependencies",
   "scripts": {
     "dev": "next dev",
     "build": "prisma generate && next build",
