@@ -32,5 +32,6 @@
   "engines": {
     "node": ">=18.18.0 <24",
     "npm": ">=9 <11"
-  }
+  },
+  "comment": "Clean Tailwind CSS v3 setup - no v4 dependencies"
 }
