@@ -18,28 +18,22 @@ export default function AuthHeader() {
   }
 
   return (
-    <div className="bg-white border-b border-gray-200 px-4 py-3">
+    <div className="sticky top-0 z-50 bg-white border-b border-gray-200 px-4 py-3">
       <div className="max-w-4xl mx-auto flex justify-between items-center">
-        <div className="text-sm text-gray-600">
-          {session?.user ? (
-            <span>
-              Welcome back, <span className="font-medium text-gray-800">
-                {session.user.name?.replace(/instructor$/i, '') || session.user.email}
-              </span>
-              {session.user.role && session.user.role !== 'instructor' && (
-                <span className="ml-2 text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full">
-                  {session.user.role}
-                </span>
-              )}
-            </span>
-          ) : (
-            <span>Welcome to ResearchBridge</span>
-          )}
+        <div className="text-lg font-bold text-gray-800">
+          ResearchBridge
         </div>
         
         <div className="flex items-center space-x-4">
           {session?.user ? (
             <>
+              {/* Home link - always visible for authenticated users */}
+              <Link 
+                href="/" 
+                className="text-sm text-gray-600 hover:text-gray-800"
+              >
+                Home
+              </Link>
               {/* Instructor Dashboard - only for instructors */}
               {session.user.role === "instructor" && (
                 <Link 

@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
+import AuthHeader from "@/components/AuthHeader";
 import { 
   PreferenceTrendChart, 
   StudentEngagementHeatmap, 
@@ -275,6 +276,8 @@ export default function InstructorDashboard() {
     </div>
   ) : (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50/30">
+      <AuthHeader />
+      
       {/* Compact Notification Panel */}
       <div className={`fixed top-24 right-4 z-50 transform transition-all duration-500 ease-out ${
         showNotifications 
@@ -365,40 +368,8 @@ export default function InstructorDashboard() {
         </div>
       </div>
 
-      {/* Header */}
-      <div className="bg-white/80 backdrop-blur-sm shadow-sm border-b border-slate-200/60">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                      <div className="flex justify-between items-center py-6">
-              <div>
-                <h1 className="text-2xl font-bold tracking-tight bg-gradient-to-r from-slate-900 via-blue-800 to-indigo-900 bg-clip-text text-transparent">ResearchBridge</h1>
-              </div>
-            <div className="flex items-center space-x-4">
-              <Link 
-                href="/" 
-                className="flex items-center gap-1 text-slate-600 hover:text-slate-800 transition-colors duration-200"
-                title="Back to app"
-              >
-                <svg 
-                  width="16" 
-                  height="16" 
-                  viewBox="0 0 24 24" 
-                  fill="none" 
-                  stroke="currentColor" 
-                  strokeWidth="2" 
-                  strokeLinecap="round" 
-                  strokeLinejoin="round"
-                  className="w-4 h-4"
-                >
-                  <path d="M19 12H5M12 19l-7-7 7-7"/>
-                </svg>
-                Back
-              </Link>
-            </div>
-          </div>
-        </div>
-      </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="max-w-4xl mx-auto px-4 py-8">
         <div className="flex justify-between items-center mb-6">
           <div>
             <h2 className="text-xl font-semibold text-slate-900 mb-2">Instructor Dashboard</h2>
@@ -833,25 +804,25 @@ export default function InstructorDashboard() {
                 <h3 className="text-lg font-semibold text-gray-900">Student Activity & Preferences</h3>
               </div>
               <div className="overflow-x-auto">
-                <table className="min-w-full divide-y divide-gray-200">
+                <table className="w-full divide-y divide-gray-200">
                   <thead className="bg-gray-50">
                     <tr>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                         Student
                       </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <th className="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                         Last Active
                       </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <th className="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                         Sessions
                       </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                         Preferences
                       </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Nudge Effectiveness
+                      <th className="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Nudge %
                       </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <th className="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                         Status
                       </th>
                     </tr>
@@ -863,38 +834,38 @@ export default function InstructorDashboard() {
                         className="hover:bg-gray-50 transition-colors duration-200 cursor-pointer"
                         onClick={() => setSelectedStudent(student)}
                       >
-                        <td className="px-6 py-4 whitespace-nowrap">
+                        <td className="px-3 py-4 whitespace-nowrap">
                           <div className="flex items-center">
-                            <div className="flex-shrink-0 h-10 w-10">
-                              <div className="h-10 w-10 bg-gray-300 flex items-center justify-center transition-transform duration-200 hover:scale-110">
-                                <span className="text-sm font-medium text-gray-700">
+                            <div className="flex-shrink-0 h-8 w-8">
+                              <div className="h-8 w-8 bg-gray-300 flex items-center justify-center transition-transform duration-200 hover:scale-110">
+                                <span className="text-xs font-medium text-gray-700">
                                   {student.name?.charAt(0) || "?"}
                                 </span>
                               </div>
                             </div>
-                            <div className="ml-4">
-                              <div className="text-sm font-medium text-gray-900">{student.name || "Anonymous"}</div>
-                              <div className="text-sm text-gray-500">{student.email}</div>
+                            <div className="ml-3">
+                              <div className="text-sm font-medium text-gray-900 truncate max-w-[120px]">{student.name || "Anonymous"}</div>
+                              <div className="text-xs text-gray-500 truncate max-w-[120px]">{student.email}</div>
                             </div>
                           </div>
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                          {new Date(student.lastActive).toLocaleDateString()}
+                        <td className="px-2 py-4 whitespace-nowrap text-xs text-gray-900">
+                          {new Date(student.lastActive).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                        <td className="px-2 py-4 whitespace-nowrap text-sm text-gray-900">
                           {student.sessionCount}
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
+                        <td className="px-3 py-4">
                           <div className="flex flex-wrap gap-1">
                             {(expandedPreferences.has(student.id) ? student.preferences : student.preferences.slice(0, 2)).map(pref => (
-                              <span key={pref} className="inline-flex px-2 py-1 text-xs bg-blue-100 text-blue-800 transition-all duration-200 hover:bg-blue-200 hover:scale-105">
+                              <span key={pref} className="inline-flex px-1.5 py-0.5 text-xs bg-blue-100 text-blue-800 transition-all duration-200 hover:bg-blue-200 hover:scale-105">
                                 {PREFERENCE_LABELS[pref] || pref}
                               </span>
                             ))}
                             {student.preferences.length > 2 && !expandedPreferences.has(student.id) && (
                               <button
                                 onClick={(e) => togglePreferences(student.id, e)}
-                                className="inline-flex px-2 py-1 text-xs bg-gray-100 text-gray-600 transition-all duration-200 hover:bg-gray-200 hover:scale-105 cursor-pointer"
+                                className="inline-flex px-1.5 py-0.5 text-xs bg-gray-100 text-gray-600 transition-all duration-200 hover:bg-gray-200 hover:scale-105 cursor-pointer"
                               >
                                 +{student.preferences.length - 2}
                               </button>
@@ -902,28 +873,23 @@ export default function InstructorDashboard() {
                             {student.preferences.length > 2 && expandedPreferences.has(student.id) && (
                               <button
                                 onClick={(e) => togglePreferences(student.id, e)}
-                                className="inline-flex px-2 py-1 text-xs bg-gray-100 text-gray-600 transition-all duration-200 hover:bg-gray-200 hover:scale-105 cursor-pointer"
+                                className="inline-flex px-1.5 py-0.5 text-xs bg-gray-100 text-gray-600 transition-all duration-200 hover:bg-gray-200 hover:scale-105 cursor-pointer"
                               >
                                 Show less
                               </button>
                             )}
                           </div>
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="flex items-center space-x-2">
-                            <span className={`text-sm font-medium ${
-                              student.nudgeEffectiveness >= 70 ? 'text-green-600' :
-                              student.nudgeEffectiveness >= 40 ? 'text-yellow-600' :
-                              'text-red-600'
-                            }`}>
-                              {student.nudgeEffectiveness}%
-                            </span>
-                            <span className="text-xs text-gray-500">
-                              ({student.nudgeDismissals} dismissed)
-                            </span>
-                          </div>
+                        <td className="px-2 py-4 whitespace-nowrap">
+                          <span className={`text-sm font-medium ${
+                            student.nudgeEffectiveness >= 70 ? 'text-green-600' :
+                            student.nudgeEffectiveness >= 40 ? 'text-yellow-600' :
+                            'text-red-600'
+                          }`}>
+                            {student.nudgeEffectiveness}%
+                          </span>
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
+                        <td className="px-2 py-4 whitespace-nowrap">
                           <span className={`inline-flex px-2 py-1 text-xs font-semibold  ${
                             student.status === "active" 
                               ? "bg-green-100 text-green-800"
@@ -1396,22 +1362,30 @@ export default function InstructorDashboard() {
                       }
                     }
                   }}
-                  className="bg-orange-600 text-white px-4 py-2 hover:bg-orange-700 transition-all duration-200 hover:shadow-md hover:-translate-y-0.5 transform rounded-lg"
+                  className="bg-slate-100 text-slate-700 px-3 py-2 hover:bg-slate-200 transition-all duration-200 border border-slate-200 rounded-lg text-sm"
                 >
                   Populate Test Data
                 </button>
-                <button className="bg-blue-600 text-white px-4 py-2 hover:bg-blue-700 transition-all duration-200 hover:shadow-md hover:-translate-y-0.5 transform rounded-lg">
+                <button className="bg-slate-100 text-slate-700 px-3 py-2 hover:bg-slate-200 transition-all duration-200 border border-slate-200 rounded-lg text-sm">
                   Send Weekly Summary
                 </button>
-                <button className="bg-green-600 text-white px-4 py-2 hover:bg-green-700 transition-all duration-200 hover:shadow-md hover:-translate-y-0.5 transform rounded-lg">
+                <button className="bg-slate-100 text-slate-700 px-3 py-2 hover:bg-slate-200 transition-all duration-200 border border-slate-200 rounded-lg text-sm">
                   Assign Source Evaluation
                 </button>
-                <button className="bg-purple-600 text-white px-4 py-2 hover:bg-purple-700 transition-all duration-200 hover:shadow-md hover:-translate-y-0.5 transform rounded-lg">
+                <button className="bg-slate-100 text-slate-700 px-3 py-2 hover:bg-slate-200 transition-all duration-200 border border-slate-200 rounded-lg text-sm">
                   Export Class Data
                 </button>
               </div>
             </div>
             )}
+
+            {/* Tool Disclaimer */}
+            <div className="mt-8 text-center">
+              <p className="text-sm text-gray-500 italic">
+                This tool aims to support instructors in guiding students from underrepresented communities through research. 
+                Always verify student data and provide appropriate academic guidance.
+              </p>
+            </div>
           </div>
         ) : (
           <div className="text-center py-12">
@@ -1523,6 +1497,22 @@ export default function InstructorDashboard() {
             </div>
           </div>
         )}
+
+        {/* Footer */}
+        <footer className="mt-16 bg-white/80 backdrop-blur-sm border-t border-slate-200/60">
+          <div className="max-w-4xl mx-auto px-4 py-10">
+            <div className="text-center">
+              <h2 className="text-2xl font-bold tracking-tight bg-gradient-to-r from-slate-900 via-blue-800 to-indigo-900 bg-clip-text text-transparent mb-2">
+                ResearchBridge
+              </h2>
+              <p className="text-sm text-slate-600 font-medium mb-4">Understand research with confidence. Built for students, with students.</p>
+              <p className="text-xs text-slate-500">
+                This tool aims to support instructors in guiding students from underrepresented communities through research. 
+                Always verify student data and provide appropriate academic guidance.
+              </p>
+            </div>
+          </div>
+        </footer>
       </div>
     </div>
   );

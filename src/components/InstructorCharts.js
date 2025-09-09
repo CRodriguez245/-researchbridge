@@ -172,15 +172,28 @@ export function StudentEngagementHeatmap({ students }) {
     <div className="bg-white p-6 rounded-lg shadow transition-all duration-300 hover:shadow-lg relative">
       <div className="flex justify-between items-center mb-4">
         <h3 className="text-lg font-semibold">Student Engagement Heatmap</h3>
-        <select 
-          value={selectedMetric} 
-          onChange={(e) => setSelectedMetric(e.target.value)}
-          className="text-sm border border-gray-300 rounded px-2 py-1"
-        >
-          {Object.entries(metrics).map(([key, value]) => (
-            <option key={key} value={key}>{value.label}</option>
-          ))}
-        </select>
+        <div className="relative">
+          <select 
+            value={selectedMetric} 
+            onChange={(e) => setSelectedMetric(e.target.value)}
+            className="text-sm border border-gray-300 rounded px-3 py-2 pr-8 bg-white cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            style={{ 
+              appearance: 'none',
+              WebkitAppearance: 'none',
+              MozAppearance: 'none',
+              backgroundImage: 'none'
+            }}
+          >
+            {Object.entries(metrics).map(([key, value]) => (
+              <option key={key} value={key}>{value.label}</option>
+            ))}
+          </select>
+          <div className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+            <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+            </svg>
+          </div>
+        </div>
       </div>
       
       <div className="grid grid-cols-5 gap-2">

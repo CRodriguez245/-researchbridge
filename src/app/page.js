@@ -373,17 +373,6 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50/30 text-foreground font-sans relative">
       <AuthHeader />
-      
-      <header className="w-full border-b border-slate-200/60 bg-white/80 backdrop-blur-sm shadow-sm">
-        <div className="max-w-4xl mx-auto px-4 py-6">
-          <div>
-            <h1 className="text-3xl font-bold tracking-tight bg-gradient-to-r from-slate-900 via-blue-800 to-indigo-900 bg-clip-text text-transparent">
-              ResearchBridge
-            </h1>
-            <p className="text-sm text-slate-600 mt-1 font-medium">Understand research with confidence. Built for students, with students.</p>
-          </div>
-        </div>
-      </header>
 
       <main className="max-w-4xl mx-auto px-4 py-6 sm:py-8">
         <section className="border border-slate-200/60 bg-white/90 backdrop-blur-sm shadow-lg rounded-lg overflow-hidden">
@@ -1070,9 +1059,15 @@ export default function Home() {
       />
 
       <footer className="max-w-4xl mx-auto px-4 py-10 text-sm text-slate-600">
-        <p>
-          This tool aims to support students from underrepresented communities in navigating research. Always double-check facts and cite your sources.
-        </p>
+        <div className="text-center">
+          <h2 className="text-2xl font-bold tracking-tight bg-gradient-to-r from-slate-900 via-blue-800 to-indigo-900 bg-clip-text text-transparent mb-2">
+            ResearchBridge
+          </h2>
+          <p className="text-sm text-slate-600 font-medium mb-4">Understand research with confidence. Built for students, with students.</p>
+          <p className="text-xs text-slate-500">
+            This tool aims to support students from underrepresented communities in navigating research. Always double-check facts and cite your sources.
+          </p>
+        </div>
       </footer>
     </div>
   );
